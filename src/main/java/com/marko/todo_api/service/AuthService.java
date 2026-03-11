@@ -2,6 +2,7 @@ package com.marko.todo_api.service;
 
 import com.marko.todo_api.dto.AuthRequestDTO;
 import com.marko.todo_api.dto.AuthResponseDTO;
+import com.marko.todo_api.exception.UsernameAlreadyExistsException;
 import com.marko.todo_api.model.User;
 import com.marko.todo_api.repository.UserRepository;
 import com.marko.todo_api.security.JwtService;
@@ -30,6 +31,9 @@ public class AuthService {
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("ROLE_USER");
+        if(userRepository.findByUsername(request.getUsername()).isPresent()){
+            throw new UsernameAlreadyExistsException("Username already exists!");
+        }
         User savedUser=userRepository.save(user);
         String token= jwtService.generateToken(savedUser);
         return new AuthResponseDTO(token);
