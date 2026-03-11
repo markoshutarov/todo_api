@@ -13,6 +13,11 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
+    private User user;
+
     @Column(nullable = false,length = 100)
     @NotBlank
     @Size(max = 100)
@@ -24,6 +29,14 @@ public class Todo {
     @Column(nullable = false)
     private boolean completed=false;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Todo() {
     }
 
@@ -33,6 +46,8 @@ public class Todo {
         this.description = description;
         this.completed = completed;
     }
+
+
 
     public Long getId() {
         return id;

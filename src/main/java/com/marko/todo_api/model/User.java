@@ -19,6 +19,9 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "user")
+    private List<Todo> todos;
+
     @Column(nullable = false,unique = true)
     @NotBlank
     @Size(min = 6,max = 30)
@@ -37,6 +40,14 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public List<Todo> getTodos() {
+        return todos;
+    }
+
+    public void setTodos(List<Todo> todos) {
+        this.todos = todos;
     }
 
     public Long getId() {
