@@ -1,6 +1,9 @@
 package com.marko.todo_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +20,10 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(nullable = false,unique = true)
+    @NotBlank
+    @Size(min = 6,max = 30)
     private String username;
 
-    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
